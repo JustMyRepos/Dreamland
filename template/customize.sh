@@ -98,7 +98,8 @@ if [ "${BOOTMODE}" = "true" ]; then
 fi
 
 ui_print "- $ALERT_EXTRACT_MODULE_FILES"
-unzip -o "$ZIPFILE" module.prop uninstall.sh post-fs-data.sh service.sh sepolicy.rule system.prop -d "$MODPATH" >&2 || abort "! $ERR_EXTRACT_MODULE_FILES $?"
+unzip -o "$ZIPFILE" module.prop uninstall.sh post-fs-data.sh service.sh sepolicy.rule -d "$MODPATH" >&2 || abort "! $ERR_EXTRACT_MODULE_FILES $?"
+([ "$API" -eq 21 ] || [ "$API" -eq 22 ]) || unzip -o "$ZIPFILE" system.prop -d "$MODPATH" >&2 || abort "! $ERR_EXTRACT_MODULE_FILES $?"
 unzip -o "$ZIPFILE" 'dreamland.jar' 'riru/*' -d "$MODPATH" >&2 || abort "! $ERR_EXTRACT_SYSTEM_FOLDER $?"
 
 # Remove broken file created by broken builds
